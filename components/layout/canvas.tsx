@@ -48,12 +48,12 @@ const CanvasLayout = ({ children }: CanvasLayoutProps) => {
       <ambientLight />
       {children}
 
-      <EffectComposer>
+      {/* <EffectComposer>
         <Noise opacity={0.9} />
         <ChromaticAberration
           offset={new Vector2(0.0011, 0.0011)} // color offset
         />
-      </EffectComposer>
+      </EffectComposer> */}
     </Canvas>
   )
 }
