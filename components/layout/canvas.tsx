@@ -41,10 +41,10 @@ const CanvasLayout = ({ children }: CanvasLayoutProps) => {
     >
       <Preload all />
       {/* <Controls />/ */}
-      <mesh>
+      {/* <mesh>
         <boxGeometry args={[50, 50, 50]} />
         <meshBasicMaterial attach="material" color={bgCol} side={DoubleSide} />
-      </mesh>
+      </mesh> */}
       <ambientLight />
       {children}
 

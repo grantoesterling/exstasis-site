@@ -8,6 +8,9 @@ import HeadingText from '@components/HeadingText'
 import SubheadingText from '@components/SubheadingText'
 import { MenuHighlights } from '@components/menuHighlights'
 import { CanvasText } from '@components/canvasText'
+import { Box, Flex } from '@react-three/flex'
+import { useThree } from '@react-three/fiber'
+import { HomePage } from '@components/HomePage'
 
 // dom components go here
 const DOM = (props: { clickSetter: (theme: boolean) => void }) => {
@@ -32,8 +35,9 @@ const DOM = (props: { clickSetter: (theme: boolean) => void }) => {
 const R3F = (props: { click: boolean }) => {
   return (
     <Canvas>
-      <CanvasText text="Hello" />
-      <MenuHighlights selectedItem={0} />
+      <HomePage />
+
+      {/* <MenuHighlights selectedItem={0} /> */}
     </Canvas>
   )
 }
