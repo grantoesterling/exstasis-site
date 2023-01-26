@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import {
   Mesh,
   BufferGeometry,
@@ -13,12 +13,22 @@ import { Text, useAspect } from '@react-three/drei'
 import tw from 'twin.macro'
 import { Box, Flex } from '@react-three/flex'
 import { CanvasText } from './canvasText'
+import { DitherRect } from './ditheredRect'
+import { useRouter } from 'next/router'
 
 export const HomePage = () => {
   const { size } = useThree()
+  const router = useRouter()
+  var t = useThree()
   const [vpWidth, vpHeight] = useAspect(size.width, size.height)
-  const mainSize = 2
-  const subSize = 1.1
+  const s = Math.min(1, t.viewport.width / 10)
+
+  const mainSize = 2 * s
+  const subSize = 0.8 * s
+  const subFont = '/Roslindale.ttf'
+  const color = '#000000'
+  const [showHighlight, setShowHighlight] = useState<number>(0)
+  const outlineWidth = 0.001
   return (
     <Flex
       flexDir="column"
@@ -35,12 +45,37 @@ export const HomePage = () => {
         justifyContent="center"
         width="100%"
         height="30%"
+        wrap={'wrap'}
       >
-        <Box centerAnchor width="auto" height="auto" flexGrow={1}>
-          <CanvasText text="Collection" size={subSize} />
+        <Box centerAnchor width="auto" height="100%" flexGrow={1}>
+          <Text
+            font={subFont}
+            fontSize={subSize}
+            color={showHighlight === 1 ? '#ffffff' : color}
+            outlineColor={'#000000'}
+            outlineWidth={showHighlight === 1 ? outlineWidth : 0}
+            onPointerEnter={() => setShowHighlight(1)}
+            onPointerLeave={() => setShowHighlight(0)}
+            onClick={() => router.push('/collection')}
+          >
+            Collection
+          </Text>
+          {showHighlight === 1 ? <DitherRect color="#a9184a" /> : null}
         </Box>
-        <Box centerAnchor width="auto" height="auto" flexGrow={1}>
-          <CanvasText text="Process" size={subSize} />
+        <Box centerAnchor width="auto" height="100%" flexGrow={1}>
+          <Text
+            font={subFont}
+            fontSize={subSize}
+            color={showHighlight === 2 ? '#ffffff' : color}
+            onPointerEnter={() => setShowHighlight(2)}
+            onPointerLeave={() => setShowHighlight(0)}
+            outlineColor={'#000000'}
+            outlineWidth={showHighlight === 2 ? outlineWidth : 0}
+            onClick={() => router.push('/process')}
+          >
+            Process
+          </Text>
+          {showHighlight === 2 ? <DitherRect color="#0474B9" /> : null}
         </Box>
       </Box>
       <Box
@@ -50,7 +85,9 @@ export const HomePage = () => {
         alignItems="center"
         justifyContent="center"
       >
-        <CanvasText text="Exstasis" size={mainSize} />
+        <Text font={'/d.woff'} fontSize={mainSize} color={color}>
+          Exstasis
+        </Text>
       </Box>
       <Box
         flexDir="row"
@@ -58,12 +95,37 @@ export const HomePage = () => {
         justifyContent="center"
         width="100%"
         height="30%"
+        wrap={'wrap'}
       >
-        <Box centerAnchor width="auto" height="auto" flexGrow={1}>
-          <CanvasText text="Artist" size={subSize} />
+        <Box centerAnchor width="auto" height="100%" flexGrow={1}>
+          <Text
+            font={subFont}
+            fontSize={subSize}
+            color={showHighlight === 3 ? '#ffffff' : color}
+            onPointerEnter={() => setShowHighlight(3)}
+            onPointerLeave={() => setShowHighlight(0)}
+            outlineColor={'#000000'}
+            outlineWidth={showHighlight === 3 ? outlineWidth : 0}
+            onClick={() => router.push('/artist')}
+          >
+            Artist
+          </Text>
+          {showHighlight === 3 ? <DitherRect color="#048C64" /> : null}
         </Box>
-        <Box centerAnchor width="auto" height="auto" flexGrow={1}>
-          <CanvasText text="Physicals" size={subSize} />
+        <Box centerAnchor width="auto" height="100%" flexGrow={1}>
+          <Text
+            font={subFont}
+            fontSize={subSize}
+            color={showHighlight === 4 ? '#ffffff' : color}
+            onPointerEnter={() => setShowHighlight(4)}
+            onPointerLeave={() => setShowHighlight(0)}
+            outlineColor={'#000000'}
+            outlineWidth={showHighlight === 4 ? outlineWidth : 0}
+            onClick={() => router.push('/physicals')}
+          >
+            Physicals
+          </Text>
+          {showHighlight === 4 ? <DitherRect color="#EAB004" /> : null}
         </Box>
       </Box>
     </Flex>

@@ -1,8 +1,8 @@
 import Head from 'next/head'
 
-const titleDefault = 'Grant!'
-const url = 'https://granto.xyz/'
-const description = 'The personal website of Grant Oesterling'
+const titleDefault = 'Exstasis by Grant Oesterling'
+const url = 'https://exstas.is/'
+const description = 'The website for the artwork Exstasis by Grant Oesterling'
 const author = 'Grant Oesterling'
 
 const Header = ({ title = titleDefault }) => {
