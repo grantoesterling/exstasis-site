@@ -7,6 +7,7 @@ import {
   Vector3,
   Color,
   Vector2,
+  Euler,
 } from 'three'
 import { useFrame, useThree } from '@react-three/fiber'
 import { Text, useAspect } from '@react-three/drei'
@@ -15,6 +16,7 @@ import { Box, Flex } from '@react-three/flex'
 import { CanvasText } from './canvasText'
 import { DitherRect } from './ditheredRect'
 import { useRouter } from 'next/router'
+import { NavItem } from './NavItem'
 
 export const HomePage = () => {
   const { size } = useThree()
@@ -29,105 +31,42 @@ export const HomePage = () => {
   const color = '#000000'
   const [showHighlight, setShowHighlight] = useState<number>(0)
   const outlineWidth = 0.001
+
   return (
-    <Flex
-      flexDir="column"
-      justify={'center'}
-      alignItems="center"
-      justifyContent="center"
-      centerAnchor
-      size={[vpWidth, vpHeight, 0]}
-      position={[0, 0, 0]}
-    >
-      <Box
-        flexDir="row"
-        alignItems="center"
-        justifyContent="center"
-        width="100%"
-        height="30%"
-        wrap={'wrap'}
-      >
-        <Box centerAnchor width="auto" height="100%" flexGrow={1}>
-          <Text
-            font={subFont}
-            fontSize={subSize}
-            color={showHighlight === 1 ? '#ffffff' : color}
-            outlineColor={'#000000'}
-            outlineWidth={showHighlight === 1 ? outlineWidth : 0}
-            onPointerEnter={() => setShowHighlight(1)}
-            onPointerLeave={() => setShowHighlight(0)}
-            onClick={() => router.push('/collection')}
-          >
-            Collection
-          </Text>
-          {showHighlight === 1 ? <DitherRect color="#a9184a" /> : null}
-        </Box>
-        <Box centerAnchor width="auto" height="100%" flexGrow={1}>
-          <Text
-            font={subFont}
-            fontSize={subSize}
-            color={showHighlight === 2 ? '#ffffff' : color}
-            onPointerEnter={() => setShowHighlight(2)}
-            onPointerLeave={() => setShowHighlight(0)}
-            outlineColor={'#000000'}
-            outlineWidth={showHighlight === 2 ? outlineWidth : 0}
-            onClick={() => router.push('/process')}
-          >
-            Process
-          </Text>
-          {showHighlight === 2 ? <DitherRect color="#0474B9" /> : null}
-        </Box>
-      </Box>
-      <Box
-        width="100%"
-        height="30%"
-        centerAnchor
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Text font={'/d.woff'} fontSize={mainSize} color={color}>
-          Exstasis
-        </Text>
-      </Box>
-      <Box
-        flexDir="row"
-        alignItems="center"
-        justifyContent="center"
-        width="100%"
-        height="30%"
-        wrap={'wrap'}
-      >
-        <Box centerAnchor width="auto" height="100%" flexGrow={1}>
-          <Text
-            font={subFont}
-            fontSize={subSize}
-            color={showHighlight === 3 ? '#ffffff' : color}
-            onPointerEnter={() => setShowHighlight(3)}
-            onPointerLeave={() => setShowHighlight(0)}
-            outlineColor={'#000000'}
-            outlineWidth={showHighlight === 3 ? outlineWidth : 0}
-            onClick={() => router.push('/artist')}
-          >
-            Artist
-          </Text>
-          {showHighlight === 3 ? <DitherRect color="#048C64" /> : null}
-        </Box>
-        <Box centerAnchor width="auto" height="100%" flexGrow={1}>
-          <Text
-            font={subFont}
-            fontSize={subSize}
-            color={showHighlight === 4 ? '#ffffff' : color}
-            onPointerEnter={() => setShowHighlight(4)}
-            onPointerLeave={() => setShowHighlight(0)}
-            outlineColor={'#000000'}
-            outlineWidth={showHighlight === 4 ? outlineWidth : 0}
-            onClick={() => router.push('/physicals')}
-          >
-            Physicals
-          </Text>
-          {showHighlight === 4 ? <DitherRect color="#EAB004" /> : null}
-        </Box>
-      </Box>
-    </Flex>
+    <>
+      <Text font={'/d.woff'} fontSize={mainSize} color={color}>
+        Exstasis
+      </Text>
+      <NavItem
+        position={new Vector3(0, t.viewport.height * 0.42, 0)}
+        link={'/collection'}
+        text={'Collection'}
+        color="#cc4d6d"
+        size={subSize}
+      />
+      <NavItem
+        position={new Vector3(0, -t.viewport.height * 0.42, 0)}
+        link={'/artist'}
+        text={'Artist'}
+        color="#048C64"
+        size={subSize}
+      />
+      <NavItem
+        position={new Vector3(-t.viewport.width * 0.45, 0, 0)}
+        rotation={new Euler(0, 0, Math.PI / 2)}
+        link={'/process'}
+        text={'Process'}
+        color="#4A94D0"
+        size={subSize}
+      />
+      <NavItem
+        position={new Vector3(t.viewport.width * 0.45, 0, 0)}
+        rotation={new Euler(0, 0, -Math.PI / 2)}
+        link={'/physicals'}
+        text={'Physicals'}
+        color="#EAB004"
+        size={subSize}
+      />
+    </>
   )
 }

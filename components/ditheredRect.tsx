@@ -4,19 +4,20 @@ import {
   BufferGeometry,
   Material,
   TextureLoader,
-  Vector3,
   Color,
   Vector2,
+  Vector3,
 } from 'three'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useFlexSize } from '@react-three/flex'
 
-export const DitherRect = (props: { color: string }) => {
-  const mesh = new Mesh()
-  const ref = useRef(mesh)
-  const [width, height] = useFlexSize()
+export const DitherRect = (props: { color: string; position: Vector3 }) => {
+  var t = useThree()
 
-  ref.current.position.set(0, 0, 0)
+  // const [width, height] = useFlexSize()
+  let height = t.viewport.height
+
+  console.log(props)
   let col = new Color(props.color)
   const uniforms = useMemo(
     () => ({
@@ -45,7 +46,7 @@ export const DitherRect = (props: { color: string }) => {
     uniforms.time.value = time
   })
   return (
-    <mesh ref={ref}>
+    <mesh position={props.position}>
       <circleGeometry args={[height, 200]} />
       <shaderMaterial
         fragmentShader={ditherShader}
@@ -211,7 +212,7 @@ float cnoise(vec3 P) {
   
             vUv = uv;
             vNormal = normal;
-            float amplitude = 0.5;
+            float amplitude = 0.1;
   
             float displacement = cnoise(position.xyz+time* 0.2);
             vec3 newPosition = position;
